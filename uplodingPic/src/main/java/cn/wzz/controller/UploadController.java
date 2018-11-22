@@ -12,24 +12,30 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.wzz.service.UploadService;
 
 @Controller
-public class UploadPicController extends WebAction{
+public class UploadController extends WebAction{
 	
-	private Logger LOGGER = LoggerFactory.getLogger(UploadPicController.class);
+	private Logger LOGGER = LoggerFactory.getLogger(UploadController.class);
 	
 	@Autowired
 	private UploadService uploadService;
 
 	@RequestMapping("/")
 	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView("uploadPic");
+		ModelAndView mv = new ModelAndView("upload");
 		return mv;
 	}
 
 	@RequestMapping("/uploadFile")
 	public void uploadFile(@RequestParam("file") MultipartFile[] multipartFiles, String chunk, String chunks) throws Exception {
-		LOGGER.info("<<<<<<<<<<<<<<图片上传开始>>>>>>>>>>>");
+		LOGGER.info("<<<<<<<<<<<<<<附件上传开始>>>>>>>>>>>");
 		String folderName = request.getParameter("folderName");
 		uploadService.processPic(multipartFiles,folderName,chunk,chunks);
-		LOGGER.info("<<<<<<<<<<<<<<图片上传结束>>>>>>>>>>>");
+		LOGGER.info("<<<<<<<<<<<<<<附件上传结束>>>>>>>>>>>");
+	}
+	
+	@RequestMapping("/success")
+	public ModelAndView success() {
+		ModelAndView mv = new ModelAndView("success");
+		return mv;
 	}
 }

@@ -80,7 +80,7 @@ public class UploadServiceImpl implements UploadService {
 				fileName += originalFilename.substring(originalFilename.lastIndexOf("."));
 				String filePath = fileFolder + "/" + new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 				String dirName = rootPath + filePath;
-				LOGGER.info("<<<<<<<图片路径:{} >>>>>>>>", dirName);
+				LOGGER.info("<<<<<<<附件路径:{} >>>>>>>>", dirName);
 				File file = new File(dirName);
 				InputStream inputStream = null;
 				FileOutputStream outputStream = null;

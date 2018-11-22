@@ -18,9 +18,9 @@
 	<link href="${contextPath}/pub/bootstrap-select/bootstrap-table.css" rel="stylesheet">
 	<link rel="icon" type="image/x-icon" href="${contextPath}/pub/images/favicon.png">
 	<link href="${contextPath}/pub/plugins/imageview/viewer.min.css" rel="stylesheet">
-    <title>上传图片</title>
+    <title>上传附件</title>
 </head>
-
+<body>
 	<input id="id" type="hidden" name="id" value="${contextPath}">
     <div class="form-group">
         <label class="col-sm-2 control-label label_padding">图片<label style="color:red;">*</label></label>
@@ -47,12 +47,12 @@
 		<div class="col-sm-4 col-sm-offset-8">
 			<!--data-toggle指以什么事件触发，常用的如modal,popover,tooltips等；
 				data-target指事件的目标，一起使用就是代表data-target所指的元素以data-toggle指定的形式显示。-->
-			<input type="button" id="upload" data-toggle="modal" data-target="#myModal" value="上传图片" class="btn btn-primary btn-sm zd-btn-pd1">
+			<input type="button" id="upload" data-toggle="modal" data-target="#myModal" value="上传附件" class="btn btn-primary btn-sm zd-btn-pd1">
 		</div>
 	</div>
 
 	<form id="form1" action="" method="post" name="form1" class="form-horizontal">
-		<input type="hidden" id="backUrl" value="${contextPath}/uploadPic.do">
+		<input type="hidden" id="backUrl" value="${contextPath}/success">
 	</form>
 	
 	<!-- Modal -->
@@ -61,7 +61,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="picRefresh();"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">上传图片</h4>
+					<h4 class="modal-title" id="myModalLabel">上传附件</h4>
 				</div>
 				<form name='saveform' id='saveform' class="form-search" method="post" action="">
 					<!-- 文件目录folderName -->
@@ -71,7 +71,7 @@
 							<div class="queueList">
 								<div id="dndArea" class="placeholder">
 									<div id="filePicker"></div>
-									<p>最多可选20张</p>
+									<p>最多可选20个</p>
 								</div>
 							</div>
 							<div class="statusBar" style="display:none;">

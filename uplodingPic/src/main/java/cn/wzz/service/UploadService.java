@@ -6,7 +6,7 @@ public interface UploadService {
 
 
 	/**
-	 * 上传多个图片
+	 * 上传多个附件
 	 */
     void processPic(MultipartFile[] multipartFiles, String fileFolder, String chunk, String chunks);
 
