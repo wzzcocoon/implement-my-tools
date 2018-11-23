@@ -2,10 +2,14 @@ spring:
   security:
     user:
         name: admin
-        password: 123456
+        password: 123456 
+         
 file:
   root:
     path: /root/upload/
     
 img:
   view-path: http://localhost:8080/images/
+  
+templatefile:
+  path: E:\root\upload\pic\temp\

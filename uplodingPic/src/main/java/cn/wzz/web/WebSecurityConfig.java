@@ -24,6 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
     	// 关掉csrf的功能
     	http.csrf().disable();
+    	// 跨域的问题
+    	http.headers().frameOptions().disable();
     	
 //        http.authorizeRequests()
         		//允许所有用户访问"/"和"/uploadFile"

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-	<link href="${contextPath}/pub/webuploader/style.css" rel="stylesheet">
-	<link href="${contextPath}/pub/webuploader/webuploader.css" rel="stylesheet">
+    <title>文件上传</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="renderer" content="webkit">
@@ -14,120 +12,108 @@
 	<link href="${contextPath}/pub/css/style.min.css?v=3.0.0" rel="stylesheet">
 	<link href="${contextPath}/pub/css/ziding.css?v=20160125" rel="stylesheet">
 	<link href="${contextPath}/pub/css/validform.css" rel="stylesheet">
+	
 	<link href="${contextPath}/pub/css/bootstrap-select.min.css?v=1.12.4" rel="stylesheet">
 	<link href="${contextPath}/pub/bootstrap-select/bootstrap-table.css" rel="stylesheet">
 	<link rel="icon" type="image/x-icon" href="${contextPath}/pub/images/favicon.png">
-	<link href="${contextPath}/pub/plugins/imageview/viewer.min.css" rel="stylesheet">
-    <title>上传附件</title>
+	
+	<#-- SELECT 标签 type 0:标准型 1:自定义型 -->
+	<#macro select codeType="" type="0" fieldId="" fieldName="" defValue=""  whereCase="" paramName="" paramValue="" haveHead="true" headName="请选择"  props="" >
+		<#if type=='0'>
+			<select id="${fieldId!''}" name="${fieldName!''}"  ${props!' '}>
+				${htmlUtil('select','${type}','${codeType}','${defValue}','${whereCase}','${haveHead}','${headName}')}
+			</select>
+		<#elseif type=='1'>
+			<select id="${fieldId!''}" name="${fieldName!''}"  ${props!' '}>
+				${htmlUtil('select','${type}','${codeType}','${defValue}','${paramName}','${paramValue}','${haveHead}','${headName}','${whereCase}')}
+			</select>
+		</#if>
+	</#macro>
+	
+	<#-- 分页 标签 -->
+	<#macro pages url="" pageCount="0" currentPage="1" >
+		<input type="hidden" id="currenPage" name="currenPage" value="1">
+		<div id="pagination" class="text-center" url="${url}" pageCount="${pageCount}" currentPage="${currentPage}" ></div>
+	</#macro>
+	
+	<#-- 机构选择 标签 -->
+	<#macro organ showLevel=""  defValue="" fieldId="" fieldName="" showAreaId='_organTag_'  props="">
+		<select id="${fieldId!''}" name="${fieldName!''}"  ${props!' '}>
+			${htmlUtil('organ','${showLevel}','${defValue}','${fieldId}','${fieldName}','${showAreaId}','${props}')}
+		</select>
+	</#macro>
+	<#-- 授权用户 标签 -->
+	<#macro userwithauth showLevel=""  defValue="" fieldId="" fieldName="" showAreaId='_organTag_'  props="">
+		<select id="${fieldId!''}" name="${fieldName!''}"  ${props!' '}>
+			${htmlUtil('user','${showLevel}','${defValue}','${fieldId}','${fieldName}','${showAreaId}','${props}')}
+		</select>
+	</#macro>
+	<#-- 来源级联下拉列表 标签 -->
+	<#macro fromtype showLevel=""  defValue="" fieldId="" fieldName="" showAreaId='_organTag_'  props="">
+		${htmlUtil('fromtype','${showLevel}','${defValue}','${fieldId}','${fieldName}','${showAreaId}','${props}')}
+	</#macro>
+	<#macro queryselect codeType="" type="0" defValue="" whereCase="" paramName="" paramValue=""  >${htmlUtil('queryselect','${type}','${codeType}','${defValue}','${whereCase}','${paramName}','${paramValue}')}</#macro>
+	<#-- token -->
+	<#macro token >
+		<input type="hidden"  name="_token_"  value="${_token_!''}">
+	</#macro>
+
+    <style>
+        .fileInput{width:64px;height:64px;background:url("${contextPath}/pub/images/icon_add.png");overflow:hidden;position:relative;}
+        .upfile{width:64px;height:64px;position:absolute;opacity:0;alpha(opacity=0);cursor:pointer;}
+    </style>
 </head>
 <body>
-	<input id="id" type="hidden" name="id" value="${contextPath}">
-    <div class="form-group">
-        <label class="col-sm-2 control-label label_padding">图片<label style="color:red;">*</label></label>
-        <div class="col-sm-8">
-            <div class="col-sm-8" id="pic">
-			<#if attachments??>
-                <input type="hidden" id ="attachmentsSize" value="${attachments?size}"/>
-				<#list attachments as attachment>
-					<div class="col-md-2"><img class='thumbnail' style='height:100px;' src="${viewPath}${attachment.filePath}/${attachment.fileName}">&nbsp;&nbsp;
-					<#if flag!=2>
-						<a href="#" onclick="delPic('${attachment.id}');">删除</a>
-                    </#if>
-                    </div>
-					<div class="col-md-1"></div>
-
-                </#list>
-            </#if>
+<div class="container-fluid" style="padding-top: 30px">
+    <form method="post" action="${contextPath}${uploadLocation}" enctype="multipart/form-data">
+    <div id="uploadfileQueue" class="form-group">
+        <div class="col-xs-3">
+            <div class="fileInput">
+                <input type="file" name="file" id="myfile" class="upfile" onchange="selectFileFn()">
             </div>
         </div>
+        <div class="col-xs-6">
+        	<div id="filenamediv" ></div>
+        </div>
+        <div class="col-xs-3" style="padding: 20px 0">
+            <input type="submit" id="submitbtn" value="上传" class="btn btn-primary btn-sm" disabled="disabled">
+        </div>
     </div>
-	<!-- end panel -->
+    </form>
+</div>
 
-	<div class="container-fluid">
-		<div class="col-sm-4 col-sm-offset-8">
-			<!--data-toggle指以什么事件触发，常用的如modal,popover,tooltips等；
-				data-target指事件的目标，一起使用就是代表data-target所指的元素以data-toggle指定的形式显示。-->
-			<input type="button" id="upload" data-toggle="modal" data-target="#myModal" value="上传附件" class="btn btn-primary btn-sm zd-btn-pd1">
-		</div>
-	</div>
+<script src="/pub/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="/pub/js/bootstrap.min.js?v=3.4.0" type="text/javascript"></script>
+<script src="/pub/js/content.min.js?v=1.0.0"></script>
+<script src="/pub/js/plugins/layer/laydate/laydate.js"></script>
+<script src="/pub/js/public/public.js"></script>
+<script src="/pub/js/public/btPage.js"></script>
+<script src="/pub/js/plugins/layer/layer.min.js"></script>
+<script src="/pub/js/demo/layer-demo.min.js"></script>
+<script src="/pub/js/Validform_v5.3.2_ncr_min.js" type="text/javascript"></script>
+<script src="/pub/js/bootstrap-select.js" type="text/javascript"></script>
+<script src="/pub/bootstrap-select/bootstrap-table.js" type="text/javascript"></script>
 
-	<form id="form1" action="" method="post" name="form1" class="form-horizontal">
-		<input type="hidden" id="backUrl" value="${contextPath}/success">
-	</form>
-	
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="picRefresh();"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">上传附件</h4>
-				</div>
-				<form name='saveform' id='saveform' class="form-search" method="post" action="">
-					<!-- 文件目录folderName -->
-					<input type="hidden" value="pic" id="folderName">
-					<div class="modal-body" style="height:500px;overflow-y:auto;">
-						<div id="uploader">
-							<div class="queueList">
-								<div id="dndArea" class="placeholder">
-									<div id="filePicker"></div>
-									<p>最多可选20个</p>
-								</div>
-							</div>
-							<div class="statusBar" style="display:none;">
-								<div class="progress">
-									<span class="text">0%</span>
-									<span class="percentage"></span>
-								</div>
-								<div class="info"></div>
-								<div class="btns">
-									<div id="filePicker2"></div>
-									<div class="uploadBtn">开始上传</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<script type="text/javascript">
+   var BASE_PATH='${contextPath}';
+</script>
 
-	<!-- 弹出框 -->
-	<div class="modal fade" id="messageModal">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">提示信息</h4>
-				</div>
-				<div class="modal-body text-center">
-					<p id="showAlertInfo"></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="closeTab();">确&nbsp;&nbsp;定</button>
-				</div>
-			</div>
-		</div>
-	</div>
+<script type="text/javascript">
 
-
-	<script src="/pub/js/jquery-2.1.1.min.js" type="text/javascript"></script>
-	<script src="/pub/js/bootstrap.min.js?v=3.4.0" type="text/javascript"></script>
-	<script src="/pub/js/content.min.js?v=1.0.0"></script>
-	<script src="/pub/js/plugins/layer/laydate/laydate.js"></script>
-	<script src="/pub/js/public/public.js"></script>
-	<script src="/pub/js/public/btPage.js"></script>
-	<script src="/pub/js/plugins/layer/layer.min.js"></script>
-	<script src="/pub/js/demo/layer-demo.min.js"></script>
-	<script src="/pub/js/Validform_v5.3.2_ncr_min.js" type="text/javascript"></script>
-	<script src="/pub/js/bootstrap-select.js" type="text/javascript"></script>
-	<script src="/pub/bootstrap-select/bootstrap-table.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	   var BASE_PATH='${contextPath}';
-	</script>
-	<script type="text/javascript" src="${contextPath}/pub/plugins/imageview/viewer.js"></script>
-	<script type="text/javascript" src="${contextPath}/uploadPic/uploadPic.js"></script>
-	
+    var uploadLocation = '${uploadLocation}';
+    
+    function selectFileFn(){
+    	var file = $("#myfile").val();
+		var fileName = getFileName(file);
+		$('#filenamediv').html(fileName);
+    	$('#submitbtn').removeAttr("disabled");
+    }
+    
+    function getFileName(o){
+	    var pos=o.lastIndexOf("\\");
+	    return o.substring(pos+1);  
+	}
+    
+</script>
 </body>
-
 </html>
-

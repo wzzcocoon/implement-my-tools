@@ -6,10 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.xuxueli.poi.excel.ExcelImportUtil;
+
+import cn.wzz.bean.AuthorUser;
+import cn.wzz.bean.ExcelEntity;
 import cn.wzz.service.UploadService;
 
 @Service
@@ -107,4 +114,39 @@ public class UploadServiceImpl implements UploadService {
 		}
 	}
 
+	
+	/**
+	 * 批量上传线索数据
+	 */
+	@Override
+	public List<ExcelEntity> saveImport(MultipartFile file) throws IOException{
+		ExcelImportUtil<ExcelEntity> excelImport = new ExcelImportUtil<>(ExcelEntity.class);
+		List<ExcelEntity> list = excelImport.importExcel(file.getInputStream());
+		List<ExcelEntity> errorList = new ArrayList<>();
+		if(null==list||list.isEmpty()) {
+			  throw new RuntimeException("请至少导入一条数据");
+		}else {
+			for (ExcelEntity entity : list) {
+				//基础项必填校验
+				if(StringUtils.isBlank(entity.getWorkCity())){
+					entity.setRemark("工作城市为空");
+					errorList.add(entity);
+					continue;
+				}
+				if(StringUtils.isBlank(entity.getName())){
+					entity.setRemark("客户姓名为空");
+					errorList.add(entity);
+					continue;
+				}
+				if(StringUtils.isBlank(entity.getMobile())){
+					entity.setRemark("手机号为空");
+					errorList.add(entity);
+					continue;
+				}
+				//saveOrigin(entity);
+			}
+		}
+		return errorList;
+	}
+	
 }
