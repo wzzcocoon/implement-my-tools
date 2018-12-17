@@ -9,6 +9,60 @@ import java.util.Set;
 
 public class DivideList {
 
+
+	public static void main(String[] args) throws Exception {
+		//实例,新建一个96条的list集合,将他平均分成几等份
+        List<Integer> list = new ArrayList<Integer>();          
+        for (int i = 0; i < 96; i++) {
+            list.add(i);
+        }
+        
+        List<List<Integer>> averageAssign = myAssign(list,10);
+        for(List<Integer> ls : averageAssign) {
+        	System.out.println(ls);
+        }
+        System.out.println("------------------------------------");
+
+        //	list.get(list.size())							-->		java.lang.IndexOutOfBoundsException
+        //	list.subList(list.size(), list.size()).size()  	-->  0     不报错？
+        //	list.subList(list.size(), list.size()+1).size()	-->		java.lang.IndexOutOfBoundsException
+        List<Integer> subList = list.subList(list.size(), list.size());
+        System.out.println(subList);
+        System.out.println(list.subList(list.size(), list.size()).size());
+        
+        System.out.println(list.subList(0, 0));
+        //	list.subList(0, 0).get(0)						-->		java.lang.IndexOutOfBoundsException
+        
+	}
+	
+	/**
+     * 将一个list分成n个list,不使用偏移量（不均分）
+     * 	直接取模为每片的大小，剩下的余数，都放到最后一片就可以了
+     * @param list
+     * @return
+     */
+    public static <T> List<List<T>> myAssign(List<T> list, int n) {
+        if (list == null) {
+            throw new NullPointerException("List must not be null");
+        }
+        if (n <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0");
+        }
+        List<List<T>> result = new ArrayList<List<T>>();
+        int remainder = list.size() % n;
+        int number = list.size() / n;
+        for (int i = 0; i < n; i++) {
+            List<T> value = null;
+            if(i == n-1) {
+            	value = list.subList(i * number , (i + 1) * number  + remainder);
+            }else {
+            	value = list.subList(i * number , (i + 1) * number );
+            }
+            result.add(value);
+        }
+        return result;
+    }
+	
 	/**将一个list平均分为num份
 	 * @param num分的份数
 	 * @param list需要分的集合
@@ -37,26 +91,6 @@ public class DivideList {
 		// 将map返回
 		return retMap; 
 	}
-	
-	public static void main(String[] args) throws Exception {
-		//实例,新建一个96条的list集合,将他平均分成几等份
-        List<Integer> list = new ArrayList<Integer>();          
-        for (int i = 0; i < 96; i++) {
-            list.add(i);
-        }
-//        List<List<Integer>> averageAssign = averageAssign(list,100);
-
-        //	list.get(list.size())							-->		java.lang.IndexOutOfBoundsException
-        //	list.subList(list.size(), list.size()).size()  	-->  0     不报错？
-        //	list.subList(list.size(), list.size()+1).size()	-->		java.lang.IndexOutOfBoundsException
-        List<Integer> subList = list.subList(list.size(), list.size());
-        System.out.println(subList);
-        System.out.println(list.subList(list.size(), list.size()).size());
-        
-        System.out.println(list.subList(0, 0));
-        //	list.subList(0, 0).get(0)						-->		java.lang.IndexOutOfBoundsException
-	}
-	
 	
 	/**
      * 将一个list均分成n个list,主要通过偏移量来实现的

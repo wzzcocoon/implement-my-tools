@@ -29,6 +29,7 @@
 		<common.lang.version>2.6</common.lang.version>
 		<fb.framework.version>1.0.1</fb.framework.version>
 		<fb.carsys.version>1.0</fb.carsys.version>
+		<fb.tool.excel>1.0.0</fb.tool.excel>
 		<landray.flow.version>2.0</landray.flow.version>
 		<landray.user.version>1.0</landray.user.version>
 		<fastjson.version>1.2.35</fastjson.version>
@@ -96,18 +97,6 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency>
 
-
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.10-FINAL</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.13</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -132,6 +121,23 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fb.tool</groupId>
+			<artifactId>excel</artifactId>
+			<version>${fb.tool.excel}</version>
 		</dependency>
 	</dependencies>
 
