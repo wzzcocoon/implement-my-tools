@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,15 @@ public class UploadController extends WebAction{
 		response.setCharacterEncoding("utf-8");
 		response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "iso8859-1"));
 		InputStream is;
-		String filePath = viewPath +fileName;
+		String filePath;
+		if(StringUtils.isNotEmpty(viewPath)) {
+			filePath = viewPath +fileName;
+		}else {
+			//获取项目路径
+	        File directory = new File("");
+	        String courseFile = directory.getCanonicalPath();
+	        filePath = courseFile + "\\src\\main\\resources\\static\\file\\" + fileName;
+		}
 		is = new FileInputStream(new File(filePath));
 		OutputStream os = response.getOutputStream();
 		byte[] b = new byte[2048];

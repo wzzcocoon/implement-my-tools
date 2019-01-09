@@ -116,7 +116,7 @@ public class UploadServiceImpl implements UploadService {
 
 	
 	/**
-	 * 批量上传线索数据
+	 * 批量上传数据
 	 */
 	@Override
 	public List<ExcelEntity> saveImport(MultipartFile file) throws IOException{
@@ -145,6 +145,9 @@ public class UploadServiceImpl implements UploadService {
 				}
 				//saveOrigin(entity);
 			}
+			LOGGER.info("<<<<<<<<<文件上传数据>>>>>>>> ");
+			LOGGER.info(list.toString());
+			LOGGER.info("<<<<<<<<<文件上传数据>>>>>>>> ");
 		}
 		return errorList;
 	}
