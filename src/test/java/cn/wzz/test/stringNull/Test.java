@@ -13,7 +13,15 @@ public class Test {
 		System.out.println(str2.toString());
 		System.out.println(str3.toString());
 
-		 String string = str1.toString();
-		 System.out.println(string);
+		Long l = null;
+		System.out.println(String.valueOf(l));
+		
+		System.out.println("=================");
+		
+		System.out.println(String.valueOf(str1));
+		System.out.println((String)str1);
+		System.out.println(str1.toString());
+		
+		
 	}
 }
