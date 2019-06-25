@@ -439,14 +439,96 @@ public class DateUtil {
 		return now.getTime();
 	}
 	
+
 	
-	/**
-	 * 测试用方法
-	 */
-	public static void main(String[] args) {
-		//checkMinutes("2011-03-28 15:12:11", 30);
+    /**
+     * 日期格式yyyyMMddHHmmss
+     */
+    public static final String DATE_FORMAT_14 = "yyyyMMddHHmmss";
+    /**
+     * 日期格式成yyyyMMddHHmm
+     */
+    public static final String DATE_FORMAT_12 = "yyyyMMddHHmm";
+    /**
+     * 日期格式成yyyyMMdd
+     */
+    public static final String DATE_FORMAT_8 = "yyyyMMdd";
+    /**
+     * 日期格式成yyyyMMdd
+     */
+    public static final String DATE_FORMAT_10 = "yyyy-MM-dd";
+
+    /**
+     * 将传入的日期格式化成特定的格式
+     * 调用的时候不允许date和str为空
+     *
+     * @param date 日期
+     * @param str  格式化的样式
+     * @return 格式化好的日期
+     */
+    public static String format(Date date, String str) {
+        SimpleDateFormat format = new SimpleDateFormat(str);
+        return format.format(date);
+    }
+
+    public static Date format(String date, String str) {
+        SimpleDateFormat format = new SimpleDateFormat(str);
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+
+        }
+        return null;
+    }
+
+
+    // 日期加n天
+    public static Date getAddDate(Date dateParam,int num) {
+        Calendar c = Calendar.getInstance(); // 初始化一个Calendar
+        c.setTime(dateParam);
+        c.add(Calendar.DATE, num);
+        Date dateRet = c.getTime();
+        return dateRet;
+    }
+
+    // 日期加n天
+    public static String getAddDateStr(Date dateParam,int num,String dateFormat) {
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat); // 将字符串格式化
+        Calendar c = Calendar.getInstance(); // 初始化一个Calendar
+        c.setTime(dateParam);
+        c.add(Calendar.DATE, num);
+        Date dateRet = c.getTime();
+        String dateStr = sdf.format(dateRet);
+        return dateStr;
+    }
+
+    /**
+     * 计算两个日期之间相差的天数
+     * @param smdate 较小的时间
+     * @param bdate  较大的时间
+     * @return 相差天数
+     * @throws ParseException
+     */
+    public static int daysBetween(Date smdate,Date bdate) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        smdate=sdf.parse(sdf.format(smdate));
+        bdate=sdf.parse(sdf.format(bdate));
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(smdate);
+        long time1 = cal.getTimeInMillis();
+        cal.setTime(bdate);
+        long time2 = cal.getTimeInMillis();
+        long between_days=(time2-time1)/(1000*3600*24);
+        return Integer.parseInt(String.valueOf(between_days));
+    }
+
+    public static void main(String[] args) throws Exception{
+    	//checkMinutes("2011-03-28 15:12:11", 30);
 		int year = DateUtil.getYear(new Date());
 		System.out.println(year);
-	}
+    	
+        System.out.println(daysBetween(new Date(),new Date()));
+    }
+	
 }
 
