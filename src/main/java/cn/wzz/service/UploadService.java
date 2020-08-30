@@ -19,5 +19,5 @@ public interface UploadService {
     /**
      * 解析Excel，保存数据到数据库
      */
-    List<ExcelEntity> saveImport(MultipartFile file) throws IOException;
+//    List<ExcelEntity> saveImport(MultipartFile file) throws IOException;
 }

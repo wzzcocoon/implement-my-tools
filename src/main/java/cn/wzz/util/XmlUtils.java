@@ -39,13 +39,13 @@ public class XmlUtils {
 //		System.out.println(s);
 //		Test te = unmarshal(t, s);
 //		System.out.println(te.getName());
-		String str = "<?xml version=\"1.0\" encoding='UTF-8'?><ufinterface billtype=\"supplier\" filename=\"supplierd267c001.xml\" isexchange=\"Y\" replace=\"Y\" roottag=\"sendresult\" sender=\"001\" successful=\"N\"><sendresult><billpk></billpk><bdocid>16102dd26b300000000000supplier0</bdocid><filename>supplierd267c001.xml</filename><resultcode>-99999</resultcode><resultdescription>单据  16102dd26b300000000000supplier0  开始处理...单据  16102dd26b300000000000supplier0  处理错误:业务插件处理错误:插件类=nc.bs.bd.pfxx.plugin.SupplierPfxxPlugin,异常信息:下列字段值已存在，不允许重复，请检查：[客商编码：D000033]</resultdescription><content></content><invaliddoc><docitem name=\"组织_集团\">1</docitem><docitem name=\"银行档案\">555</docitem></invaliddoc></sendresult></ufinterface>";
-		NcResultDto dto = unmarshal(new NcResultDto(), str);
-		System.out.println(dto.getNcResult().getResultcode());
-		System.out.println(dto.getNcResult().getResultdescription());
+//		String str = "<?xml version=\"1.0\" encoding='UTF-8'?><ufinterface billtype=\"supplier\" filename=\"supplierd267c001.xml\" isexchange=\"Y\" replace=\"Y\" roottag=\"sendresult\" sender=\"001\" successful=\"N\"><sendresult><billpk></billpk><bdocid>16102dd26b300000000000supplier0</bdocid><filename>supplierd267c001.xml</filename><resultcode>-99999</resultcode><resultdescription>单据  16102dd26b300000000000supplier0  开始处理...单据  16102dd26b300000000000supplier0  处理错误:业务插件处理错误:插件类=nc.bs.bd.pfxx.plugin.SupplierPfxxPlugin,异常信息:下列字段值已存在，不允许重复，请检查：[客商编码：D000033]</resultdescription><content></content><invaliddoc><docitem name=\"组织_集团\">1</docitem><docitem name=\"银行档案\">555</docitem></invaliddoc></sendresult></ufinterface>";
+//		NcResultDto dto = unmarshal(new NcResultDto(), str);
+//		System.out.println(dto.getNcResult().getResultcode());
+//		System.out.println(dto.getNcResult().getResultdescription());
 //		System.out.println(dto.getNcResult().getDocResult().getDocitem().size());
 //		System.out.println(dto.getNcResult().getDocResult().getDocitem().get(0));
-		System.out.println(marshal(dto));
+//		System.out.println(marshal(dto));
 
 	}
 }

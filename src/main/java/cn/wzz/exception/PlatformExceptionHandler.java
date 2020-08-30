@@ -22,9 +22,9 @@ public class PlatformExceptionHandler implements HandlerExceptionResolver, Order
     @Override
     public ModelAndView resolveException(HttpServletRequest paramHttpServletRequest, HttpServletResponse paramHttpServletResponse, Object paramObject, Exception paramException) {
         Map<String, Object> model = new HashMap<String, Object>();
-        log.error("<<<<<<<<<<<< Error Uri {}. >>>>>>>>>>>>",paramHttpServletRequest.getRequestURI());
-        log.error("<<<<<<<<<<<< Exception is {}. >>>>>>>>>>>>", paramException.getMessage());
-        log.error("<<<<<<<<<<<< stackInfo is >>>>>>>>>>>>", paramException);
+//        log.error("<<<<<<<<<<<< Error Uri {}. >>>>>>>>>>>>",paramHttpServletRequest.getRequestURI());
+//        log.error("<<<<<<<<<<<< Exception is {}. >>>>>>>>>>>>", paramException.getMessage());
+//        log.error("<<<<<<<<<<<< stackInfo is >>>>>>>>>>>>", paramException);
         model.put("errorMsg", errorMsg);
         model.put("stackTrace", paramException.getMessage());
         return new ModelAndView("pub/500", model);

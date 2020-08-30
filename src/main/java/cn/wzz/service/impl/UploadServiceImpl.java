@@ -118,38 +118,38 @@ public class UploadServiceImpl implements UploadService {
 	/**
 	 * 批量上传数据
 	 */
-	@Override
-	public List<ExcelEntity> saveImport(MultipartFile file) throws IOException{
-		ExcelImportUtil<ExcelEntity> excelImport = new ExcelImportUtil<>(ExcelEntity.class);
-		List<ExcelEntity> list = excelImport.importExcel(file.getInputStream());
-		List<ExcelEntity> errorList = new ArrayList<>();
-		if(null==list||list.isEmpty()) {
-			  throw new RuntimeException("请至少导入一条数据");
-		}else {
-			for (ExcelEntity entity : list) {
-				//基础项必填校验
-				if(StringUtils.isBlank(entity.getWorkCity())){
-					entity.setRemark("工作城市为空");
-					errorList.add(entity);
-					continue;
-				}
-				if(StringUtils.isBlank(entity.getName())){
-					entity.setRemark("客户姓名为空");
-					errorList.add(entity);
-					continue;
-				}
-				if(StringUtils.isBlank(entity.getMobile())){
-					entity.setRemark("手机号为空");
-					errorList.add(entity);
-					continue;
-				}
-				//saveOrigin(entity);
-			}
-			LOGGER.info("<<<<<<<<<文件上传数据>>>>>>>> ");
-			LOGGER.info(list.toString());
-			LOGGER.info("<<<<<<<<<文件上传数据>>>>>>>> ");
-		}
-		return errorList;
-	}
+//	@Override
+//	public List<ExcelEntity> saveImport(MultipartFile file) throws IOException{
+//		ExcelImportUtil<ExcelEntity> excelImport = new ExcelImportUtil<>(ExcelEntity.class);
+//		List<ExcelEntity> list = excelImport.importExcel(file.getInputStream());
+//		List<ExcelEntity> errorList = new ArrayList<>();
+//		if(null==list||list.isEmpty()) {
+//			  throw new RuntimeException("请至少导入一条数据");
+//		}else {
+//			for (ExcelEntity entity : list) {
+//				//基础项必填校验
+//				if(StringUtils.isBlank(entity.getWorkCity())){
+//					entity.setRemark("工作城市为空");
+//					errorList.add(entity);
+//					continue;
+//				}
+//				if(StringUtils.isBlank(entity.getName())){
+//					entity.setRemark("客户姓名为空");
+//					errorList.add(entity);
+//					continue;
+//				}
+//				if(StringUtils.isBlank(entity.getMobile())){
+//					entity.setRemark("手机号为空");
+//					errorList.add(entity);
+//					continue;
+//				}
+//				//saveOrigin(entity);
+//			}
+//			LOGGER.info("<<<<<<<<<文件上传数据>>>>>>>> ");
+//			LOGGER.info(list.toString());
+//			LOGGER.info("<<<<<<<<<文件上传数据>>>>>>>> ");
+//		}
+//		return errorList;
+//	}
 	
 }

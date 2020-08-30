@@ -96,31 +96,31 @@ public class UploadController extends WebAction{
 	/**
 	 * 导入excel表，解析数据导入数据库
 	 */
-	@RequestMapping(value = "/file/importXls", produces = "text/html;charset=utf-8")
-	@ResponseBody
-	public String importClientXls(@RequestParam MultipartFile file) throws Exception {
-		List list = null;
-		try {
-			list = uploadService.saveImport(file);
-		} catch (Exception e) {
-			StringPrintWriter spw = new StringPrintWriter();
-			e.printStackTrace(spw);
-			LOGGER.error("stackTrace info {}",spw.getString());
-			return "上传异常，请稍后再试";
-		}
-
-		if (null != list && list.size() > 0) {
-			setResponeExcel("导入失败的数据");
-			// 输出流
-			OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
-			toClient.write(ExcelExportUtil.exportToBytes(list));
-			toClient.flush();
-			toClient.close();
-			return "部分导入成功！！！";
-		} else {
-			return "导入成功！！！";
-		}
-	}
+//	@RequestMapping(value = "/file/importXls", produces = "text/html;charset=utf-8")
+//	@ResponseBody
+//	public String importClientXls(@RequestParam MultipartFile file) throws Exception {
+//		List list = null;
+//		try {
+//			list = uploadService.saveImport(file);
+//		} catch (Exception e) {
+//			StringPrintWriter spw = new StringPrintWriter();
+//			e.printStackTrace(spw);
+//			LOGGER.error("stackTrace info {}",spw.getString());
+//			return "上传异常，请稍后再试";
+//		}
+//
+//		if (null != list && list.size() > 0) {
+//			setResponeExcel("导入失败的数据");
+//			// 输出流
+//			OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+//			toClient.write(ExcelExportUtil.exportToBytes(list));
+//			toClient.flush();
+//			toClient.close();
+//			return "部分导入成功！！！";
+//		} else {
+//			return "导入成功！！！";
+//		}
+//	}
 	
 	/**
 	 * 设置下载的Excel表格式
