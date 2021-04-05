@@ -1,18 +1,10 @@
 package cn.wzz.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
+import cn.wzz.service.UploadService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xuxueli.poi.excel.ExcelExportUtil;
-
-import cn.wzz.exception.StringPrintWriter;
-import cn.wzz.service.UploadService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 public class UploadController extends WebAction{
@@ -53,7 +46,7 @@ public class UploadController extends WebAction{
 	/**
 	 * 下载文件
 	 */
-	@Value("${templatefile.path}")
+//	@Value("${templatefile.path}")
 	String viewPath;
 	@RequestMapping("downloadDemo")
 	public void download() throws Exception {

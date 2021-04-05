@@ -1,37 +1,28 @@
 package cn.wzz.service.impl;
 
+import cn.wzz.service.UploadService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.xuxueli.poi.excel.ExcelImportUtil;
-
-import cn.wzz.bean.AuthorUser;
-import cn.wzz.bean.ExcelEntity;
-import cn.wzz.service.UploadService;
 
 @Service
 public class UploadServiceImpl implements UploadService {
 
 	private Logger LOGGER = LoggerFactory.getLogger(UploadServiceImpl.class);
 	
-	@Value("${file.root.path}")
+//	@Value("${file.root.path}")
 	private String rootPath;
 
 	@Override
