@@ -17,9 +17,16 @@ public class StringObjectEquals {
 		
 		System.out.println(obj==str);
 		
-		Object o = null;
-        System.out.println("111".equals(o));
-		
+        System.out.println("============");
+
+
+		String A="abc";
+		String B="abc";
+		String C= new String("abc");
+		String D= new String("abc");
+		System.out.println(A==B);
+		System.out.println(B==C);
+		System.out.println(C==D);
 	}
 	
 }
