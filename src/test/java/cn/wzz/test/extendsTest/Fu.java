@@ -15,4 +15,8 @@ public class Fu {
 	public static void test() {
 		System.out.println("I am Fu");
 	}
+
+	public void aa() {
+		System.out.println("I am Fu aa");
+	}
 }

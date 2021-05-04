@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class MyThreadPoolExecutorDemo {
 
 
-    public static ExecutorService newMyThreadPoolExecutor(int corePoolSize,
+    public static ExecutorService getMyThreadPoolExecutor(int corePoolSize,
                                                           int maximumPoolSize, int blockingQueueSize, RejectedExecutionHandler handler){
         return new ThreadPoolExecutor(
                 corePoolSize,
@@ -24,12 +24,11 @@ public class MyThreadPoolExecutorDemo {
 
 
     public static void main(String[] args) {
-        doSomething(newMyThreadPoolExecutor(2, 5, 3, new ThreadPoolExecutor.AbortPolicy()), 10);
-        doSomething(newMyThreadPoolExecutor(2, 5, 3, new ThreadPoolExecutor.CallerRunsPolicy()), 20);
-        doSomething(newMyThreadPoolExecutor(2, 5, 3, new ThreadPoolExecutor.DiscardOldestPolicy()), 10);
-        doSomething(newMyThreadPoolExecutor(2, 5, 3, new ThreadPoolExecutor.DiscardPolicy()), 10);
+        doSomething(getMyThreadPoolExecutor(2, 5, 3, new ThreadPoolExecutor.AbortPolicy()), 10);
+        doSomething(getMyThreadPoolExecutor(2, 5, 3, new ThreadPoolExecutor.CallerRunsPolicy()), 20);
+        doSomething(getMyThreadPoolExecutor(2, 5, 3, new ThreadPoolExecutor.DiscardOldestPolicy()), 10);
+        doSomething(getMyThreadPoolExecutor(2, 5, 3, new ThreadPoolExecutor.DiscardPolicy()), 10);
     }
-
     public static void doSomething(ExecutorService executorService, int numOfRequest) {
 
         try {
@@ -53,6 +52,6 @@ public class MyThreadPoolExecutorDemo {
             executorService.shutdown();
         }
     }
-
+    
 }
 

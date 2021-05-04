@@ -14,7 +14,14 @@ public class Test {
 		Fu f2 = zi;
 		
 		List<Zi> l1 = new ArrayList<Zi>();
-		
+
+
+		Fu f = new Fu(){
+			void a(){
+				System.out.println("??");
+			}
+		};
+		f.aa();
 	}	
 	
 	

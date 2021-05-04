@@ -5,18 +5,28 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Test {
 
 	public static void main(String[] args) throws InterruptedException {
+
+		CopyOnWriteArrayList copyOnWriteArrayList = new CopyOnWriteArrayList();
+		copyOnWriteArrayList.add("1");
+		System.out.println(copyOnWriteArrayList.size());
+
+
+
+		System.out.println(1 << 30);
+		System.out.println((int) Math.pow(2,30));
+
+
 		BigDecimal c = new BigDecimal("0.01");
 		System.out.println(c.toString());
 		
@@ -59,5 +69,30 @@ public class Test {
         Object o = null;
         System.out.println("111".equals(o));
         
+	}
+}
+
+class Inc {
+	public static void main(String[] args) {
+		Inc inc = new Inc();
+		int i = 0;
+		inc.fermin(i);
+		i= i ++;
+//		int tmp = 1;
+//		i = i+1;
+//		i = tmp;
+		System.out.println(i);
+
+
+//		byte b1=1,b2=2,b3,b6;
+//		final byte b4=4,b5=6;
+//		b6=b4+b5;
+//		b3=(b1+b2);
+//		System.out.println(b3+b6);
+
+	}
+
+	void fermin(int i){
+		i++;
 	}
 }
