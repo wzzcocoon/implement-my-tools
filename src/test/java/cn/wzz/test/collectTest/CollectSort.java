@@ -29,18 +29,22 @@ public class CollectSort {
         ///////////////////////////////////////////////////////
 
         List<Human> humanList = new ArrayList<>();
-        humanList.add(new Human("今天", new Date()));
-        humanList.add(new Human("后天", DateUtils.addDays(new Date(), 2)));
-        humanList.add(new Human("昨天", DateUtils.addDays(new Date(), -1)));
-        humanList.add(new Human("明天", DateUtils.addDays(new Date(), 1)));
+        humanList.add(new Human(2, "今天", new Date()));
+        humanList.add(new Human(1, "今天", new Date()));
+        humanList.add(new Human(3,"后天", DateUtils.addDays(new Date(), 2)));
+        humanList.add(new Human(4,"昨天", DateUtils.addDays(new Date(), -1)));
+        humanList.add(new Human(5,"明天", DateUtils.addDays(new Date(), 1)));
         System.out.println("排序前>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println(humanList);
         System.out.println("排序后>>>>>>>>>>>>>>>>>>>>>>>");
-        listSort2(humanList);
+        listSort4(humanList);
         System.out.println(humanList);
     }
 
-
+//    public int compareTo(Student o){} 这个方法，它返回三种 int 类型的值： 负整数，零 ，正整数。
+//    负整数：当前对象的值 < 比较对象的值，位置排在前
+//    零   ：当前对象的值 = 比较对象的值 ， 位置不变
+//    正整数：当前对象的值 > 比较对象的值，位置排在后
 
     /**
      * 根据list列表元素的时间字段进行升序排序
@@ -64,6 +68,7 @@ public class CollectSort {
                 return h1.getBirthday().compareTo(h2.getBirthday());
             }
         });
+        //降序
         Collections.reverse(list);
     }
 
@@ -85,19 +90,56 @@ public class CollectSort {
         });
     }
 
+    /**
+     * 先根据name字段排序，后根据id排序
+     */
+    public static void listSort4(List<Human> list) {
+        Collections.sort(list, new Comparator<Human>() {
+            @Override
+            public int compare(Human h1, Human h2) {
+                if (h1.getName().equals(h2.getName())) {
+                    return h1.getId() - h2.getId();
+                } else {
+                    return convertType(h1.getName()) - convertType(h2.getName());
+                }
+            }
+
+            public int convertType(String name){
+                if ("明天".equals(name)){
+                    return 1;
+                }else if ("今天".equals(name)){
+                    return 2;
+                }else if ("后天".equals(name)){
+                    return 3;
+                }else {
+                    return 4;
+                }
+            }
+        });
+    }
+
 }
 
 
 
 class Human {
+    private int id;
     private String name;
     private Date birthday;
     public Human() {
     }
-    public Human(String name, Date birthday) {
+    public Human(int id, String name, Date birthday) {
         super();
+        this.id = id;
         this.name = name;
         this.birthday = birthday;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
     public String getName() {
         return name;
@@ -111,8 +153,13 @@ class Human {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
     @Override
     public String toString() {
-        return "Human [name=" + name + ", birthday=" + birthday + "]";
+        return "Human{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }
