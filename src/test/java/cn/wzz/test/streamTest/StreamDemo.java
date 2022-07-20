@@ -48,6 +48,11 @@ public class StreamDemo {
         System.out.println(collect2); //map( this.xxx(obj) )  和上面写法一致
 
 
+        // mapToInt 方法
+        int sum = list.stream().mapToInt(WeChatAmount::getTotal).sum();
+        System.out.println(sum);
+
+
         //filter 方法 (过滤出符合的数据)
         list.add(null);
         System.out.println(list);
